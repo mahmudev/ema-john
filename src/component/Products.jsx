@@ -33,7 +33,7 @@ const Products = () => {
 
   return (
     <>
-      <div className="bg-gray-100 sm:grid grid-cols-5 px-4 py-6 min-h-full lg:min-h-screen space-y-6 sm:space-y-0 sm:gap-4">
+      <div className="sticky top-0 bg-gray-100 sm:grid grid-cols-5 px-4 py-6 min-h-full lg:min-h-screen space-y-6 sm:space-y-0 sm:gap-4">
         <div className="col-span-4 lg:px-10">
           {isLoading ? (
             <div className="flex items-center justify-center">
@@ -63,7 +63,11 @@ const Products = () => {
             )}
           </div>
         </div>
-        <Sidebar></Sidebar>
+        
+        <div className="col-span-1">
+          <Sidebar></Sidebar>
+        </div>
+
       </div>
     </>
   );

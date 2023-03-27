@@ -2,7 +2,7 @@ import React from "react";
 
 const Sidebar = () => {
   return (
-    <div>
+    <div className="sticky top-0">
       <div className="h-96 col-span-1 ">
         <div className="bg-white py-3 px-4 rounded-lg flex justify-around items-center ">
           <input
@@ -65,7 +65,7 @@ const Sidebar = () => {
               </svg>
               <span> Proceed Checkout </span>
             </button>
-            <button className="text-lg w-full block my-2 font-semibold py-2 px-6 text-black  bg-[#FF3030] rounded-lg shadow hover:shadow-md transition duration-300">
+            <button className="text-lg w-full block my-2 font-semibold py-2 px-6 text-black  bg-[#1C2B35] rounded-lg shadow hover:shadow-md transition duration-300">
               Clear Cart
             </button>
           </div>
