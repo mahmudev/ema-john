@@ -5,7 +5,7 @@ const Footer = () => {
         <div>
             <>
   {/* component */}
-  <div className="bg-gray-100">
+  <div className="bg-[#95A0A7]">
     <div className="max-w-6xl m-auto text-gray-800 flex flex-wrap justify-center">
       <div className="p-5 w-48 ">
         <div className="text-xs uppercase text-gray-500 font-medium">Home</div>
@@ -102,7 +102,7 @@ const Footer = () => {
       </div>
     </div>
   </div>
-  <div className="bg-gray-100 pt-2 ">
+  <div className="bg-[#95A0A7] pt-2 ">
     <div
       className="flex pb-5 px-3 m-auto pt-5 border-t text-gray-800 text-sm flex-col
 md:flex-row max-w-6xl"

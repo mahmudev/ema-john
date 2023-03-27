@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Cart from "./Cart";
+import Product from "./Product";
 import Sidebar from "./Sidebar";
 
-const Carts = () => {
-  const [carts, setCarts] = useState([]);
+const Products = () => {
+  const [products, setCarts] = useState([]);
   const [visibleCarts, setVisibleCarts] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -21,13 +21,13 @@ const Carts = () => {
   }, []);
 
   useEffect(() => {
-    setVisibleCarts(carts.slice(0, itemsPerPage));
+    setVisibleCarts(products.slice(0, itemsPerPage));
     setCurrentIndex(itemsPerPage);
-  }, [carts, itemsPerPage]);
+  }, [products, itemsPerPage]);
 
   const handleSeeMoreClick = () => {
     const nextIndex = currentIndex + itemsPerPage;
-    setVisibleCarts(carts.slice(0, nextIndex));
+    setVisibleCarts(products.slice(0, nextIndex));
     setCurrentIndex(nextIndex);
   };
 
@@ -47,17 +47,17 @@ const Carts = () => {
           ) : (
             <>
               <div className="grid grid-flow-row gap-5 text-neutral-600 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-                {visibleCarts.map((cart) => (
-                  <Cart cart={cart} key={cart.id} />
+                {visibleCarts.map((product) => (
+                  <Product product={product} key={product.id} />
                 ))}
               </div>
             </>
           )}
           <div class="flex items-center justify-center py-10 bg-gray-100">
-            {currentIndex < carts.length && (
+            {currentIndex < products.length && (
               <button
                 onClick={handleSeeMoreClick}
-                className="text-lg block font-semibold py-2 px-6 text-green-100 hover:text-white bg-green-400 rounded-lg shadow hover:shadow-md transition duration-300 "
+                className="text-lg block font-semibold py-2 px-6 text-black bg-[#95A0A7] rounded-lg shadow hover:shadow-md transition duration-300 "
               >
                 See More
               </button>
@@ -70,4 +70,4 @@ const Carts = () => {
   );
 };
 
-export default Carts;
+export default Products;

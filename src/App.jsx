@@ -1,13 +1,13 @@
 import React from "react";
 import Footer from "./component/Footer";
 import Navbar from "./component/Navbar";
-import Carts from "./component/Carts";
+import Products from "./component/Products";
 
 function App() {
   return (
     <div className="App">
       <Navbar></Navbar>
- <Carts></Carts>
+      <Products></Products>
       <Footer></Footer>
     </div>
   );
