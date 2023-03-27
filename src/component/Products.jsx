@@ -37,13 +37,12 @@ const Products = () => {
         <div className="col-span-4 lg:px-10">
           {isLoading ? (
             <div className="flex items-center justify-center">
-            <div
-              style={{ borderTopColor: "transparent" }}
-              className="w-8 h-8 border-4 border-blue-200 rounded-full animate-spin"
-            />
-            <p className="ml-2">Loading...</p>
-          </div>
-          
+              <div
+                style={{ borderTopColor: "transparent" }}
+                className="w-8 h-8 border-4 border-blue-200 rounded-full animate-spin"
+              />
+              <p className="ml-2">Loading...</p>
+            </div>
           ) : (
             <>
               <div className="grid grid-flow-row gap-5 text-neutral-600 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">

@@ -1,19 +1,7 @@
 import React from "react";
 
 const Product = (props) => {
-  const {
-    id,
-    category,
-    name,
-    seller,
-    price,
-    stock,
-    ratings,
-    ratingsCount,
-    img,
-    shipping,
-    quantity,
-  } = props?.product;
+  const {id, category, name, seller, price, stock, ratings, ratingsCount, img, shipping, quantity,} = props?.product;
 
   return (
     <div>
@@ -32,17 +20,11 @@ const Product = (props) => {
               {name.slice(0, 19)}
             </h1>
             <div className="flex gap-2">
-              <p className="text-sm mt-2 text-gray-700">
-                Stock: {stock}
-              </p>
-              <p className="text-sm mt-2 text-gray-700">
-                Seller: {seller}
-              </p>
+              <p className="text-sm mt-2 text-gray-700">Stock: {stock}</p>
+              <p className="text-sm mt-2 text-gray-700">Seller: {seller}</p>
             </div>
             <div className="flex gap-2">
-              <p className="text-sm mt-2 text-gray-700">
-                Category: {category}
-              </p>
+              <p className="text-sm mt-2 text-gray-700">Category: {category}</p>
             </div>
             <div className="flex gap-2">
               <p className="text-sm mt-2 text-gray-700">
@@ -51,7 +33,6 @@ const Product = (props) => {
             </div>
 
             <div className="mt-4 mb-2 flex justify-between ">
-
               <button class="flex w-full items-center justify-center gap-2 px-4 py-2 text-black bg-[#FF9900] shadow hover:shadow-md transition duration-300 rounded-lg">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
