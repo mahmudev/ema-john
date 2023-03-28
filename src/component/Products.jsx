@@ -1,24 +1,33 @@
 import React, { useEffect, useState } from "react";
+import Cart from "./Cart";
+import { addToDb } from "./fakeDb";
 import Product from "./Product";
-import Sidebar from "./Sidebar";
 
 const Products = () => {
-  const [products, setCarts] = useState([]);
+  const [cart, setCart] = useState([]);
+
+  const [products, setProducts] = useState([]);
   const [visibleCarts, setVisibleCarts] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
-  const itemsPerPage = 18;
+  const itemsPerPage = 20;
 
   useEffect(() => {
     setIsLoading(true);
     fetch("./products.json")
       .then((res) => res.json())
       .then((data) => {
-        setCarts(data);
+        setProducts(data);
         setIsLoading(false);
       });
   }, []);
+
+  const addToCart = (product) => {
+    const newCart = [...cart, product];
+    setCart(newCart);
+    addToDb(product.id);
+  };
 
   useEffect(() => {
     setVisibleCarts(products.slice(0, itemsPerPage));
@@ -33,7 +42,7 @@ const Products = () => {
 
   return (
     <>
-      <div className="sticky top-0 bg-gray-100 sm:grid grid-cols-5 px-4 py-6 min-h-full lg:min-h-screen space-y-6 sm:space-y-0 sm:gap-4">
+      <div className=" bg-gray-100 sm:grid grid-cols-5 px-4 py-6 min-h-full lg:min-h-screen space-y-6 sm:space-y-0 sm:gap-4">
         <div className="col-span-4 lg:px-10">
           {isLoading ? (
             <div className="flex items-center justify-center">
@@ -45,9 +54,13 @@ const Products = () => {
             </div>
           ) : (
             <>
-              <div className="grid grid-flow-row gap-5 text-neutral-600 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+              <div className="grid grid-flow-row gap-5 text-neutral-600 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {visibleCarts.map((product) => (
-                  <Product product={product} key={product.id} />
+                  <Product
+                    product={product}
+                    key={product.id}
+                    addToCart={addToCart}
+                  />
                 ))}
               </div>
             </>
@@ -63,11 +76,10 @@ const Products = () => {
             )}
           </div>
         </div>
-        
-        <div className="col-span-1">
-          <Sidebar></Sidebar>
-        </div>
 
+        <div className="col-span-1">
+          <Cart cart={cart}></Cart>
+        </div>
       </div>
     </>
   );
