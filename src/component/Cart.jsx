@@ -2,15 +2,22 @@ import React from "react";
 
 const Cart = ({ cart }) => {
   // console.log(cart);
-  let total = 0;
+  let totalPrice = 0;
   let totalShipping = 0;
+  let quantity = 0;
   for (const product of cart) {
-    total = total + product.price;
-    totalShipping = totalShipping + product.shipping;
-  }
+      // if(product.quantity === 0){
+      //     product.quantity = 1;
+      // }
+      // product.quantity = product.quantity || 1;
 
-  const tax = (total * 7) / 100;
-  const grandTotal = total + totalShipping + tax;
+      totalPrice = totalPrice + product.price * product.quantity;
+      totalShipping = totalShipping + product.shipping;
+      quantity = quantity + product.quantity;
+  }
+  const tax = totalPrice * 7 / 100;
+
+  const grandTotal = totalPrice + totalShipping + tax;
 
   return (
     <div className="sticky top-0">
@@ -48,7 +55,7 @@ const Cart = ({ cart }) => {
               <p className="list-none">Selected Items: {cart.length}</p>
             </li>
             <li className="p-3 ">
-              <p className="list-none">Total Price: {total}</p>
+              <p className="list-none">Total Price: {totalPrice}</p>
             </li>
             <li className="p-3 ">
               <p className="list-none">
