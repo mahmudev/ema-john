@@ -1,8 +1,49 @@
 import React from "react";
+import "@fortawesome/fontawesome-free/css/all.css";
+import { toast } from "react-toastify";
 
 const Product = (props) => {
-  const {id, category, name, seller, price, stock, ratings, ratingsCount, img, shipping, quantity,} = props?.product;
-const handelAddToCart = props.addToCart
+  const notify = () =>
+    toast.success("Product added to cart", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+  const {
+    id,
+    category,
+    name,
+    seller,
+    price,
+    stock,
+    ratings,
+    ratingsCount,
+    img,
+    shipping,
+    quantity,
+  } = props?.product;
+  const handelAddToCart = props.addToCart;
+
+  const stars = [];
+
+  for (let i = 1; i <= 5; i++) {
+    if (i <= ratings) {
+      stars.push(
+        <i className="fa fa-star" key={i} style={{ color: "goldenrod" }}></i>
+      );
+    } else {
+      stars.push(
+        <i className="far fa-star" key={i} style={{ color: "goldenrod" }}></i>
+      );
+    }
+  }
+
   return (
     <div>
       <div className="bg-gray-100 flex justify-center items-center">
@@ -15,27 +56,34 @@ const handelAddToCart = props.addToCart
               </button>
             </div>
           </div>
-          <div className="mt-2 h-[230px] justify-between flex flex-col  ">
-            <h1 className="text-md font-bold text-gray-700">
-              {name}
-            </h1>
-            <div className="flex gap-2">
-              <p className="text-sm mt-2 text-gray-700">Stock: {stock}</p>
-              <p className="text-sm mt-2 text-gray-700">Seller: {seller}</p>
+          <div className="mt-2 h-[180px] justify-between flex flex-col ">
+            <div className=" justify-around flex flex-col">
+              <div>
+                <h1 className="text-md font-bold text-gray-700">{name}</h1>
+              </div>
+              <div className="flex mt-2 gap-3">
+                <p className="text-sm  text-gray-700">Stock: {stock}</p>
+                <p className="text-sm  text-gray-700">Seller: {seller}</p>
+              </div>
+              <div className="">
+                <p className="text-sm mt-2 text-gray-700">
+                  Category: {category}
+                </p>
+              </div>
+              <div className="">
+                <p className="text-sm mt-2 text-gray-700">
+                  Ratings: {stars}({ratingsCount})
+                </p>
+              </div>
             </div>
-            <div className="flex gap-2">
-              <p className="text-sm mt-2 text-gray-700">Category: {category}</p>
-            </div>
-            <div className="flex gap-2">
-              <p className="text-sm mt-2 text-gray-700">
-                Ratings: {ratingsCount}
-              </p>
-            </div>
-
-            <div className="mt-4 mb-2 flex justify-between ">
+            <div>
               <button
-              onClick={()=>handelAddToCart(props.product)}
-               class="flex w-full items-center justify-center gap-2 px-4 py-2 text-black bg-[#FF9900] shadow hover:bg-[#995C00] rounded-lg">
+                onClick={() => {
+                  handelAddToCart(props.product);
+                  notify();
+                }}
+                class="flex w-full items-center justify-center gap-2 px-4 py-2 text-black bg-[#FF9900] shadow hover:bg-[#995C00] rounded-lg"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
