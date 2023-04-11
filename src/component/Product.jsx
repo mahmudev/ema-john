@@ -1,34 +1,8 @@
-import React from "react";
 import "@fortawesome/fontawesome-free/css/all.css";
-import { toast } from "react-toastify";
+import React from "react";
 
 const Product = (props) => {
-  const notify = () =>
-    toast.success("Product added to cart", {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-
-  const {
-    id,
-    category,
-    name,
-    seller,
-    price,
-    stock,
-    ratings,
-    ratingsCount,
-    img,
-    shipping,
-    quantity,
-  } = props?.product;
-  const handelAddToCart = props.addToCart;
+const { id, category, name, seller, price, stock, ratings, ratingsCount, img, shipping, quantity, } = props.product;
 
   const stars = [];
 
@@ -78,10 +52,7 @@ const Product = (props) => {
             </div>
             <div>
               <button
-                onClick={() => {
-                  handelAddToCart(props.product);
-                  notify();
-                }}
+                onClick={() =>props.addToBookmark(props.product)}
                 class="flex w-full items-center justify-center gap-2 px-4 py-2 text-black bg-[#FF9900] shadow hover:bg-[#995C00] rounded-lg"
               >
                 <svg

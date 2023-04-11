@@ -1,17 +1,62 @@
 import React, { useEffect, useState } from "react";
 import Cart from "./Cart";
-import { addToDb, getShoppingCart } from "./fakeDb";
 import Product from "./Product";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Products = () => {
-  const [cart, setCart] = useState([]);
-
   const [products, setProducts] = useState([]);
   const [visibleCarts, setVisibleCarts] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [bookmarks, setBookmarks] = useState(
+    JSON.parse(localStorage.getItem("bookmarks")) || []
+  );
 
   const itemsPerPage = 20;
+
+  const addToBookmark = (product) => {
+    const currentBookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+    
+    // Check if product already exists in bookmarks
+    if (currentBookmarks.some((bookmark) => bookmark.id === product.id)) {
+      toast("already added to cart", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    
+    const updatedBookmarks = [...currentBookmarks, product];
+    localStorage.setItem("bookmarks", JSON.stringify(updatedBookmarks));
+    setBookmarks(updatedBookmarks);
+  };
+
+  const removeFromBookmark = (product) => {
+    const currentBookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+    
+    // Find the index of the bookmark to remove
+    const indexToRemove = currentBookmarks.findIndex((bookmark) => bookmark.id === product.id);
+    
+    if (indexToRemove === -1) {
+      return;
+    }
+    
+    // Create a new array without the bookmark to remove
+    const updatedBookmarks = [
+      ...currentBookmarks.slice(0, indexToRemove),
+      ...currentBookmarks.slice(indexToRemove + 1)
+    ];
+    
+    localStorage.setItem("bookmarks", JSON.stringify(updatedBookmarks));
+    setBookmarks(updatedBookmarks);
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -22,46 +67,6 @@ const Products = () => {
         setIsLoading(false);
       });
   }, []);
-
-  useEffect(() => {
-    const storedCart = getShoppingCart();
-    const savedCart = [];
-    // step 1: get id of the addedProduct
-    for (const id in storedCart) {
-      // step 2: get product from products state by using id
-      const addedProduct = products.find((product) => product.id === id);
-      if (addedProduct) {
-        // step 3: add quantity
-        const quantity = storedCart[id];
-        addedProduct.quantity = quantity;
-        // step 4: add the added product to the saved cart
-        savedCart.push(addedProduct);
-      }
-      // console.log('added Product', addedProduct)
-    }
-    // step 5: set the cart
-    setCart(savedCart);
-  }, [products]);
-
-  const addToCart = (product) => {
-    // cart.push(product); '
-    let newCart = [];
-    // const newCart = [...cart, product];
-    // if product doesn't exist in the cart, then set quantity = 1
-    // if exist update quantity by 1
-    const exists = cart.find((pd) => pd.id === product.id);
-    if (!exists) {
-      product.quantity = 1;
-      newCart = [...cart, product];
-    } else {
-      exists.quantity = exists.quantity + 1;
-      const remaining = cart.filter((pd) => pd.id !== product.id);
-      newCart = [...remaining, exists];
-    }
-
-    setCart(newCart);
-    addToDb(product.id);
-  };
 
   useEffect(() => {
     setVisibleCarts(products.slice(0, itemsPerPage));
@@ -93,7 +98,8 @@ const Products = () => {
                   <Product
                     product={product}
                     key={product.id}
-                    addToCart={addToCart}
+                    addToBookmark={addToBookmark}
+                   
                   />
                 ))}
               </div>
@@ -112,11 +118,11 @@ const Products = () => {
         </div>
 
         <div className="col-span-1">
-          <Cart cart={cart}></Cart>
+          <Cart removeFromBookmark={removeFromBookmark} bookmarks={bookmarks}></Cart>
         </div>
       </div>
     </>
-  );
+  )
 };
 
 export default Products;
